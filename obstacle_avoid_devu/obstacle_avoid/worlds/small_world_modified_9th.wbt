@@ -1,0 +1,82 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+OilBarrel {
+  hidden linearVelocity_0 -3.153784727843762e-17 -1.0889552161252891e-06 -5.332154326651335e-18
+  hidden angularVelocity_0 -1.5078185156567765e-16 -4.899902876334559e-17 3.0156370313135584e-16
+  translation -0.06372129998777627 0.07453785362522744 0.002317089974558299
+  rotation -5.474081151172981e-16 1 -1.526754459961039e-16 -0.4478935969492282
+  name "oil_barrel"
+  height 0.15
+  radius 0.05
+  physics Physics {
+  }
+}
+Wall {
+  translation 0.01 0 -0.31
+  size 0.1 0.1 0.1
+}
+PlasticCrate {
+  translation -0.32 0 0.36
+  name "plastic_crate"
+  size 0.1 0.11 0.11
+}
+Viewpoint {
+  orientation 0.27624598195669214 0.9061174745678462 0.32037365643194127 4.270273166404398
+  position -1.3471330728683863 1.2938296630718067 -0.4740886854241243
+}
+TexturedBackground {
+  texture "factory"
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.01 0 0.04
+  rotation 0 -1 0 -1.3089953071795861
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallHeight 0.07
+  wallAppearance BrushedAluminium {
+    colorOverride 0.988235 0.686275 0.243137
+  }
+}
+DEF supervisor Robot {
+  children [
+    DEF emitter Emitter {
+    }
+    DEF receiver Receiver {
+    }
+  ]
+  name "supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+Rock10cm {
+  translation 0.05 0.05 0.43
+}
+DEF robot E-puck {
+  hidden position_0_0 2.8408217397877182
+  hidden position_0_1 2.9168965453975058
+  hidden linearVelocity_0 0.07733926154659947 0.0001116552604702162 0.01981835718759514
+  hidden angularVelocity_0 -0.0009185932905861221 0.003454947387753135 0.004378597520521893
+  hidden rotation_1 -1 0 0 2.8408217397877182
+  hidden linearVelocity_1 0.07723100509364418 0.00011275043025762098 0.019792051748399483
+  hidden angularVelocity_1 0.9894831945905649 0.004321016181785788 -3.8609635016961907
+  hidden rotation_2 -1 0 0 2.9168965453975058
+  hidden linearVelocity_2 0.07740485219019883 0.00011018033807215165 0.01983575123892887
+  hidden angularVelocity_2 0.9918971359271949 0.004378058482380379 -3.870452718648497
+  translation -0.2575124831326949 -7.832631696224127e-05 0.1949474996119772
+  rotation 0.0002945357271938401 -0.9999999042620963 0.00032361165561144525 1.8217912841385966
+  name "robot"
+  controller "robot"
+  emitter_channel 0
+  receiver_channel 0
+}
+DEF target HoneyJar {
+  hidden linearVelocity_0 -5.44210181837194e-17 -4.628064685335151e-07 2.834647866920262e-17
+  hidden angularVelocity_0 2.7611764343009035e-16 1.2296479996357196e-16 6.747220442118599e-16
+  translation 0.2394139999953718 -0.0006961408331740138 0.16941102213492346
+  rotation 9.361563077569316e-13 1 2.1142039041730307e-13 -0.000238906666032605
+}

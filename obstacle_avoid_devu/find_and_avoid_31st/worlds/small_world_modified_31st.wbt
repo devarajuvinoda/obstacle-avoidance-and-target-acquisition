@@ -1,0 +1,60 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.3288218016416252 0.8626466203312745 0.3843397340845539 4.246181671099789
+  position -1.3537312356488143 1.916393718154532 -0.4725861069661125
+}
+TexturedBackground {
+  texture "factory"
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.01 0 0.04
+  rotation 0 -1 0 -1.3089953071795861
+  floorSize 1.1 1.1
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallHeight 0.07
+  wallAppearance BrushedAluminium {
+    colorOverride 0.988235 0.686275 0.243137
+  }
+}
+DEF supervisor Robot {
+  children [
+    DEF emitter Emitter {
+    }
+    DEF receiver Receiver {
+    }
+  ]
+  name "supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+DEF robot E-puck {
+  hidden position_0_0 4.087850516332052
+  hidden position_0_1 10.870391658286655
+  hidden linearVelocity_0 0.0003821450891546358 -6.866020599247671e-07 0.003972877847648022
+  hidden angularVelocity_0 0.04615141641189234 0.321370185959513 -0.004187306800115274
+  hidden rotation_1 -1 0 0 4.087850516332052
+  hidden linearVelocity_1 0.0011955738296065316 -5.107762858127875e-07 0.012521816328425727
+  hidden angularVelocity_1 0.6655766274240941 0.32163340992914374 -0.06348797272536932
+  hidden rotation_2 1 0 0 1.6959789560725178
+  hidden linearVelocity_2 -0.00039339254959681104 -3.3100423223989867e-07 -0.004116019579912561
+  hidden angularVelocity_2 -0.24561010546913808 0.32142798417149326 0.02341097551382563
+  translation 0.11781975231908573 -6.39736411060382e-05 -0.3386765947388758
+  rotation 0.003970100173384689 0.9999921097101495 -0.00013719350344961606 0.10106464907377433
+  name "robot"
+  controller "robot"
+  emitter_channel 0
+  receiver_channel 0
+}
+DEF target HoneyJar {
+  hidden linearVelocity_0 8.651242782771525e-05 0.00016211861140673914 1.9569057041906844e-05
+  hidden angularVelocity_0 0.00034032814069252614 5.570539805450365e-17 -0.001504549434667355
+  translation 0.20691526692574827 -0.0007169229151326104 0.3544161797786146
+  rotation 0.0001476260758901076 0.9999993799656272 -0.0011037549106827588 -0.1789918095088933
+}

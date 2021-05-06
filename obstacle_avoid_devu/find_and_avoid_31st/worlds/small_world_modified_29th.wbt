@@ -1,0 +1,74 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+DEF oil_barrel OilBarrel {
+  translation 0.19999995909630405 0.07453771414268645 0.3999999284592599
+  rotation -2.197262715203594e-07 0.999999999999956 1.9970322207285956e-07 -0.4500141501074778
+  name "oil_barrel"
+  height 0.15
+  radius 0.05
+  physics Physics {
+  }
+}
+DEF wall Wall {
+  translation 0.01 0 -0.31
+  size 0.1 0.1 0.1
+}
+DEF plastic_crate PlasticCrate {
+  translation 0.2 0 -0.2
+  name "plastic_crate"
+  size 0.1 0.11 0.11
+}
+Viewpoint {
+  orientation 0.2859913960725066 0.8854289156848946 0.3663666969602595 4.175702462393448
+  position -1.1800843295579155 1.4488186246780077 -0.5991693375221787
+}
+TexturedBackground {
+  texture "factory"
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.01 0 0.04
+  rotation 0 -1 0 -1.3089953071795861
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallHeight 0.07
+  wallAppearance BrushedAluminium {
+    colorOverride 0.988235 0.686275 0.243137
+  }
+}
+DEF supervisor Robot {
+  children [
+    DEF emitter Emitter {
+    }
+    DEF receiver Receiver {
+    }
+  ]
+  name "supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+DEF rock Rock10cm {
+  translation 0.05 0.05 0.43
+}
+DEF robot E-puck {
+  hidden position_0_0 2.7718167370305147e-08
+  hidden position_0_1 0.015999967104635242
+  hidden linearVelocity_0 6.590635768661517e-05 8.590821275807533e-07 2.838415282289712e-05
+  hidden angularVelocity_0 -0.0006934769180175097 0.0037062482713567627 0.001642972921051523
+  hidden rotation_1 -1 0 0 2.9802322387695313e-08
+  hidden rotation_2 -1 0 0 0.015999967104641938
+  translation -0.31301291539428716 -6.407707753757277e-05 0.18006014236412385
+  rotation 0.00015147884879544013 0.9999999639003255 0.0002219313090145418 -1.970122181835541
+  name "robot"
+  controller "robot"
+  emitter_channel 0
+  receiver_channel 0
+}
+DEF target HoneyJar {
+  translation 0.20001399999999994 -0.0006961999999999871 0.07989019999999997
+  rotation -9.921346289484764e-13 1 7.663841466590248e-14 0.0001811778436937523
+}

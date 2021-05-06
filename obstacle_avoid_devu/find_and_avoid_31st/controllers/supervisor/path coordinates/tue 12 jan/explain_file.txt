@@ -1,0 +1,14 @@
+robot.py - contains functions to control motors and range sensors
+
+utilities.py - contains function to find euclidean distance from robot and target, angle b/w robot and target
+
+superviosor.py - contains functions/class which takes robot and target objects, also creates a DDPG agent, 
+contains training and testing loops.
+functions to get observation from environment, apply reward, reset the simulation.
+
+networks.py - contains defintion of critic and actor networks
+also DDPG algo is defined here by using critic and actor n/w
+
+reply buffer- stores array of actions, observations, and rewards
+
+OUaction noise - noise used in actor to add exploration for action selection.

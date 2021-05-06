@@ -1,0 +1,65 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+DEF target Ball {
+  translation 0.281941 0.0734753 -0.364458
+  rotation 0.79617505614147 0.2616483386252305 -0.5455689020396819 -0.170900152073227
+  radius 0.07
+}
+OilBarrel {
+  translation -0.307608 0.0745381 0.138973
+  rotation 2.785045786485953e-05 0.9999999989397625 -3.6671882465605535e-05 -0.45662268605076944
+  height 0.15
+  radius 0.05
+  physics Physics {
+  }
+}
+Wall {
+  translation 0.26 0 0.04
+  name "wall(1)"
+  size 0.1 0.1 0.1
+}
+PlasticCrate {
+  translation -0.02 0 0.37
+  size 0.1 0.11 0.11
+}
+Viewpoint {
+  orientation 0.9924717206886171 0.10722990660537685 -0.05917457868694786 5.4628845950875515
+  position -0.15917532727290537 1.2964436077188202 1.3145407576110717
+}
+TexturedBackground {
+  texture "factory"
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorAppearance Parquetry {
+  }
+  wallThickness 0.03
+  wallHeight 0.07
+}
+DEF robot E-puck {
+  hidden linearVelocity_0 -0.06450215189855343 -1.694727807824848e-05 0.02465078918802238
+  hidden angularVelocity_0 0.003776004836440988 -0.3949513297349625 0.007846765851975043
+  translation 0.35869609957995374 -6.3987313640863e-05 0.45392108317484314
+  rotation 0.0009046195940715834 0.9999988176088687 -0.0012435611182086532 1.9258504987024518
+  name "robot"
+  controller "robot"
+  emitter_channel 0
+  receiver_channel 0
+}
+DEF supervisor Robot {
+  children [
+    DEF emitter Emitter {
+    }
+    DEF receiver Receiver {
+    }
+  ]
+  name "supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+Rock10cm {
+  translation -0.08 0.05 -0.19
+}

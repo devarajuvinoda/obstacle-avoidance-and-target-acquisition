@@ -1,0 +1,74 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+DEF oil_barrel OilBarrel {
+  translation -0.06372129998777627 0.07453771464102431 0.0023170899745583126
+  rotation -8.692000746284771e-16 1 4.874530897274477e-17 -0.4478935969492281
+  name "oil_barrel"
+  height 0.15
+  radius 0.05
+  physics Physics {
+  }
+}
+Wall {
+  translation 0.01 0 -0.31
+  size 0.1 0.1 0.1
+}
+DEF plastic_crate PlasticCrate {
+  translation -0.32 0 0.36
+  name "plastic_crate"
+  size 0.1 0.11 0.11
+}
+Viewpoint {
+  orientation 0.2845147291841661 0.9006842781512583 0.32835834079311466 4.2736997898004345
+  position -1.3738275415835288 1.319428009092243 -0.48493023231178284
+}
+TexturedBackground {
+  texture "factory"
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.01 0 0.04
+  rotation 0 -1 0 -1.3089953071795861
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallHeight 0.07
+  wallAppearance BrushedAluminium {
+    colorOverride 0.988235 0.686275 0.243137
+  }
+}
+DEF supervisor Robot {
+  children [
+    DEF emitter Emitter {
+    }
+    DEF receiver Receiver {
+    }
+  ]
+  name "supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+Rock10cm {
+  translation 0.05 0.05 0.43
+}
+DEF robot E-puck {
+  hidden position_0_0 3.46460059054216e-08
+  hidden position_0_1 0.021439960444929882
+  hidden linearVelocity_0 8.603328511804343e-05 2.0071302676190804e-08 2.432999354565979e-05
+  hidden angularVelocity_0 -0.00016739316747835776 0.0036871902033472083 0.0006011310610267132
+  hidden rotation_1 -1 0 0 2.9802322387695313e-08
+  hidden rotation_2 -1 0 0 0.02143996044492068
+  translation -0.1998018159179933 -6.397064509080716e-05 -0.3999432384417491
+  rotation 6.098142482728068e-05 -0.9999999944082812 8.639851334623565e-05 1.84234882454496
+  name "robot"
+  controller "robot"
+  emitter_channel 0
+  receiver_channel 0
+}
+DEF target HoneyJar {
+  translation -0.40000000002428576 -0.0006962000060554557 -6.874303142743393e-12
+  rotation -6.323709919299303e-08 0.9999999999999731 2.2335064410061153e-07 0.00018117784369371516
+}

@@ -1,0 +1,322 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[utf8]{inputenc}
+\usepackage{newunicodechar}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newcommand{\textprime}{\ensuremath{'}}
+\newunicodechar{′}{\textprime}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{claim}[lemma]{Claim}
+\newtheorem{theorem}[lemma]{Theorem}
+
+\setlength\parindent{0pt}
+\setlength\parskip{0.8em}
+
+% E0-225 DAA
+% E0-226 LAP
+% E0-243 HPCA
+% CP-214 FOR
+
+\title{E0-225 DAA - HW7}
+\author{ASHISH KUMAR \\ Program: Course Programme (M Tech CSA) \\ SR No: 18003 \\ ashishkumar4@iisc.ac.in}
+
+\begin{document}
+
+\date{}
+\maketitle
+
+\clearpage
+
+\section{Differential Robots}
+
+\subsection{Differential Drive}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/differential_drive.png}
+        \caption{Differential Drive (\textit{from Dudek and Jenkin, Computational Principles of Mobile Robotics.})}
+        \label{fig:my_label}
+    \end{figure}
+
+
+    ICC - \textit{Instantaneous Center of Curvature}
+    \begin{equation}
+        \omega(R + l/2) = v_r
+    \end{equation}
+    \begin{equation}
+        \omega(R - l/2) = v_l
+    \end{equation}
+    
+    where $l$ = Distance between the wheels,\\
+    $R$ = Signed distance from ICC,\\
+    $v_l$ = Left wheel velocity along ground,\\
+    $v_r$ = Right wheel velocity along ground,
+    
+    
+    
+    Instantaneous $R$, $\omega$
+    \begin{equation}
+        R = \frac{l}{2} \frac{(v_l + v_r)}{(v_r - v_l)}; \omega = \frac{v_r - v_l}{l}
+    \end{equation}
+    
+
+
+
+\subsection{Three Interesting cases}
+
+    Three interesting cases with differential drives:
+    
+\begin{enumerate}
+\item If $V_l = V_r$, then $R = \infty$;  Forward linear motion in straight line.
+\item If $V_l = -V_r$, then $R = 0$; Rotation about midpoint of wheel axis.
+\item If $V_l = 0$, then $R = \frac{l}{2}$; Rotation about left wheel. Similarly, for $V_r = 0$, $R = - \frac{l}{2}$; Rotation about right wheel
+\end{enumerate}
+
+
+
+\subsection{Forward Kinematics}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/frame_A_B.png}
+    \caption{Differential Drive}
+    \label{fig:frame_A_B}
+\end{figure}
+
+
+\begin{itemize}
+\item Robot is at position $(x, y)$, headed in direction making angle $\theta$ with $X$-axis.
+\item Pose of robot could be described be $(x, y, \theta)$
+\item Forward kinematics determines the position of robot given control parameters.
+\item Position of ICC at time $t$ will be given by:
+\end{itemize}
+    \begin{equation}
+        ICC = (x - R \, sin (\theta), y + R \, cos(\theta))
+    \end{equation}
+    
+    \begin{align*}
+    \m{x' \\ y'} &= \m{cos(\omega\delta t) & -sin(\omega\delta t) \\ sin(\omega\delta t) & cos (\omega\delta t)} \m{R \, sin(\theta) \\ - R \, cos(\theta)} + \m{ICC_x \\ ICC_y}\\
+    \theta' &= \theta + \omega \delta t
+    \end{align*}
+    
+    Robot's pose at $t + \delta t$
+    \begin{equation}
+    \m{x' \\ y' \\ \theta'} = \m{cos(\omega\delta t) & -sin(\omega\delta t) & 0 \\ sin(\omega\delta t) & cos (\omega\delta t) & 0 \\ 0 & 0 & 1} \m{x - ICC_x \\ y - ICC_y \\ \theta} + \m{ICC_x \\ ICC_y \\ \omega \delta t}
+    \end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/forward_kinematics_geometry.png}
+    \caption{Forward kinematics geometry}
+    \label{fig:fkg}
+\end{figure}
+
+
+\begin{itemize}
+\item A robot capable of moving in particular direction $\theta(t)$ at a given velocity is give by:
+\end{itemize}
+
+\begin{align}
+    x(t) &= \int_o^t V(t) cos(\theta(t)) dt\\
+    y(t) &= \int_o^t V(t) sin(\theta(t)) dt\\
+    \theta(t) &= \int_o^t \omega(t) dt
+\end{align}
+
+\begin{align*}
+    V(t) = \frac{v_r(t) + v_l(t)}{2}
+\end{align*}
+
+
+
+\begin{align}
+    x(t) &= \frac{1}{2} \int_o^t (v_r(t) + v_l(t)) cos(\theta(t)) dt\\
+    y(t) &= \frac{1}{2} \int_o^t (v_r(t) + v_l(t))  sin(\theta(t)) dt\\
+    \theta(t) &= \frac{1}{l} \int_o^t (v_r(t) - v_l(t))  dt
+\end{align}
+
+
+\subsection{Reverse Kinematics}
+    
+\begin{itemize}
+\item Non-holonomic constraint.
+\item Difficult to solve in general.
+\item Solutions straightforward for limited cases.
+\end{itemize}
+
+Case 1: Constant velocity ($v_l(t) = v_l, v_r(t) = v_r, v_l \neq v_r$)
+
+\begin{align}
+x(t) &= \frac{l}{2} \frac{(v_l + v_r)}{(v_r - v_l)} cos \left( \frac{t}{l} (v_r - v_l) \right)\\
+y(t) &= - \frac{l}{2} \frac{(v_l + v_r)}{(v_r - v_l)} sin \left( \frac{t}{l} (v_r - v_l) \right)\\
+\theta(t) &= \frac{t}{l} (v_r - v_l) 
+\end{align}
+
+where $(x, y, \theta)_{t=0} = (0, 0, 0)$
+
+
+
+Case 2: $v_l = v_r = v$
+
+\begin{equation}
+\m{x' \\ y' \\ \theta'}  = \m{x + v \, cos(\theta) \delta t \\ y  + v \, sin(\theta) \delta t \\ \theta} 
+\end{equation}
+
+
+Case 3: $- v_l = v_r = v$
+
+
+\begin{equation}
+\m{x' \\ y' \\ \theta'}  = \m{x \\ y \\ \theta + 2v \, \delta t / l} 
+\end{equation}
+
+
+Strategy used to reach desired pose:
+\begin{itemize}
+\item turn in place to face the goal location
+\item drive to the goal location
+\item turn in place to the goal orientation
+\end{itemize}
+
+
+Minimize certain quantities of interest, for example the total travel time.
+
+
+
+
+\section{Webots}
+
+\begin{itemize}
+\item Webots is a open-source software to simulate robots.
+\item It provides complete development environment to model, program and simulate robots.
+\item Large asset library which includes robots, sensors, actuators, objects and materials.
+\item GUI interface to edit simulation.
+\item Robots programmable in C, C++, Python, Java, MATLAB or ROS.
+\item Simulation can even be streamed to any web browser using webgl and websockets.
+\end{itemize}
+
+{Working of webots}
+Components of webots:
+\begin{itemize}
+\item Webots world file (external PROTO files).
+\item Controllers programs for robot (in C/C++/Java/Python/MATLAB)
+\item Optional physics plugin to modify physics behaviour.
+\end{itemize}
+
+\begin{itemize}
+\item Scene Tree
+\item Nodes (Solid, Geometry, Robot, etc)
+\item Supervisor Controller: Execute operations that can normally only be carried out by a human operator.
+\end{itemize}
+
+
+{Working of webots}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.96\textwidth]{images/webots_controller.png}
+    \caption{Webots Controller Feedback loop}
+    \label{fig:webots_controller}
+\end{figure}
+
+
+{E-puck robot}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/e_puck.png}
+    \caption{E-puck robot}
+    \label{fig:e_puck}
+\end{figure}
+
+\section{Deepbots}
+
+\section{RL Formulation}
+
+\section{Reinforcement Learning For Obstacle Avoidance and Target Acquisition}
+\subsection{Problem Definition}
+We express the problem of obstacle avoiding and target acquisition as a Markov decision process(MDP). An MDP is represented by a tuple \{\(\mathcal{S}\), \(\mathcal{A}\), \(P\), \(R\), \(\gamma\)\}. Here \(\mathcal{S} \in \mathbb{R}^{n}\) is set of robot states called state space, action space \(\mathcal{A} \in \mathbb{R}^m\) is the set of feasible actions the robot can perform, transition dynamics \(P: \mathcal{S}\times\mathcal{A}\times\mathcal{S}\rightarrow[0,1]\) is the transition probability function that models the state at timestamp \textit{t+1} based on the state and action at timestamp \textit{t} \textit{ie.} \(p(s_{t+1}|s_{t},a_{t})\), we also consider an initial state distribution \(p(s_{1})\), \(R: \mathcal{S}\times\mathcal{A}\rightarrow\mathbb{R}\) is the reward obtained for the given state and action \(r(s_{t}, a_{t})\) and \(\gamma \in [0,1]\) is defined as the discount factor. 
+
+The goal of the mobile robot is to find the target and simultaneously avoid collision with the obstacles present in the environment. In our work we consider a standard reinforcement learning setting consisting of an agent(robot) interacting with the environment \textit{E} for discrete timestamps. At each timestamp \textit{t} the agent receives an observation \(x_{t}\), performs an action \(a_{t}\), then the agent receives a scalar reward \(r_{t}\). 
+
+The rule used by the agent to decide what action to take next is called policy \(\pi\). The policy \(\pi\) which defines the agent's behavior maps states to probability distribution over actions \(\pi:\mathcal{S}\rightarrow \mathcal{P(\mathcal{A})}\). The goal of Reinforcement Learning is to learn a policy \(\pi\) which maximized the expected cumulative reward from the start distribution \( J = \mathbb{E}_{r_{i}, s_{i}\sim E,a_{i}\sim\pi }[R_{1}]\). Here, the return from a state is defined as the sum of discounted future reward \(R_{t} = \sum_{i=t}^{T}\gamma^{(i-1)}r(s_{i}, a_{i})\). The return \(R_{t}\) depends on the actions and therefore it in-turn depends on the policy \(\pi\).
+
+The action-value function describes the expected return after taking an action \(a_{t}\) in the state \(s_{t}\) and thereafter following the policy \(\pi\). 
+\[Q^{\pi}(s_{t}, a_{t}) = \mathbb{E}_{r_{i\geq t}, s_{i>t}\sim E, a_{i>t}\sim \pi}[R_{t}|s_{t}, a_{t}]\]
+
+The off-policy algorithms like Q-learning use the greedy policy \(\mu (s) = argmax_{a}Q(s,a)\). We consider function approximators with parameter \(\theta^{Q}\), which is optimized by minimizing the loss function:
+\[ L(\theta^{Q}) = \mathbb{E}_{s_{t}\sim \rho^{\beta}, a_{t}\sim \beta, r_{i}\sim E}[(Q(s_{t}, a_{t}|\theta^{Q})-y_{t})^2]\]
+where 
+\[y_{t} = r(s_{t}, a_{t})+\gamma Q(s_{t+1},\mu (s_{t+1})|\theta^{Q})\]
+
+
+\subsection{Learning Algorithm}
+As the states and actions are continuous, we use the algorithm that enable us to construct optimal policies that
+yield action values in the continuous space. The Deep Deterministic Policy Gradient(DDPG) algorithm has proved to be effective in dealing with problems involving continuous action space. We use DDPG to tackle obstacle avoidance and target acquisition task. 
+
+DDPG is an off-policy, model free, actor-critic algorithm based on deterministic policy gradient(DPG). The deterministic policy gradient algorithm consists of a parameterized actor function \(\mu(s|\theta^\mu)\) which specifies the
+policy at the current timestamp by deterministically mapping
+states to a specific action. The critic \textit{Q(s, a)} is learned using
+the Bellman equation the same way as in Q-learning. The
+actor is updated by applying the chain rule to the expected
+return from the start distribution \textit{J} with respect to the actor parameters. The policy gradient which gives the performance of the policy is given by,
+\[\triangledown_{\theta^\mu}J \approx \mathbb{E}_{s_{t}\sim \rho^\beta}[\triangledown_{a}Q(s,a|\theta^Q)|_{s=s_{t},a=\mu(s_{t})}\triangledown_{\theta^\mu}\mu(s|\theta^\mu)|s=s_{t}]\]
+
+DDPG combines the useful ideas from DQN and DPG algorithms
+to make it more robust and efficient in learning. The samples
+obtained from exploring sequentially in an environment are
+not independently and identically distributed so to address this issue DDPG uses the idea from Deep Q-Networks(DQN) called replay buffer. Replay buffer is finite sized cache, transitions were sampled from the environment and a tuple \((s_{t}, a_{t}, r_{t}, s_{t+1})\) is stored in the replay buffer. A mini-batch is sampled from the reply buffer at each timestamp to update actor and critic. 
+
+Since the network \(Q(s, a|\theta^Q)\) being updated is also used in calculating the target value, the Q update is prone to divergence. So, DDPG uses the concept of soft target updates rather than directly copying the weights to the target network.
+This is achieved by creating a copy of actor and critic networks, \(Q'(s,a|\theta^{Q'})\) and \(\mu'(s|\theta^{\mu'})\). The weights of these target networks are then updated by having them slowly track the learned networks: \[\theta'\leftarrow \tau\theta + (1-\tau)\theta', \tau \ll 1\]. This means that the target values are constrained to change slowly, greatly improving the stability of learning.
+
+To account for different physical units from different components of the observation a technique called batch normalization is used. Batch normalization technique normalizes each dimension across the samples in a mini-batch to have unit mean and variance. 
+
+A major hurdle of learning in continuous action space is exploration. To make DDPG policies explore better, we add noise to the actor policies at training time. Noise is sampled from a noise process \(\mathcal{N}\),
+\[\mu'(s_{t}) = \mu(s_{t}|\theta_{t}^\mu)+\mathcal{N}\]
+We have used an Ornstein-Uhlenbeck process with \(\mu\) as 0.0,
+\(\theta\) as 0.2 and \(\sigma\) as 0.15 to generate temporally correlated exploration.
+
+\subsection{State and Action Space}
+The E-puck robot uses 8 infrared ray proximity distance sensors and it has two motors as shown in \textit{fig \textbf{num}}. It uses differential drive mechanism for moving. The agent, in addition to the distance sensor values, also receives the Euclidean distance and angle from the target. Therefore the agent gets an one-dimensional vector with 10 values as observations. Since the actuators are motors, which means that the outputs of the agent are two values controlling the forward/backward movement and left/right turning respectively. So, there are two actions that can be performed by the agent moving forward/backward and turning which can be referred to as gas and the wheel.
+\subsection{Reward Function}
+\[r(s_{t}, a_{t}) = \begin{cases}-10 & collision\\+50 & d_{target}<th_{distance}\\-d_{target} & otherwise\end{cases}\]
+
+where \(th_{distance}\) is the threshold distance, \(d_{target}\) is the Euclidean distance between robot and the target. If the robot collides with the obstacles then it will be rewarded -10. If the robot reaches the target within the threshold distance(it is the minimum distance between robot and target which is considered as reaching the target) then it will rewarded +50. Otherwise the reward is awarded bases on \(d_{target}\).
+
+\subsection{Training Results}
+We used Webots simulator which relies on Open Dynamics Engine(ODE) for physics simulation, for realistic model of the simulation. 
+
+\begin{center}
+ \begin{tabular}{c | c} 
+ \hline
+ Entity & Value \\ [0.5ex] 
+ \hline
+ Discount factor (\(\gamma\)) & 0.99  \\ 
+ Learning rate - actor & 0.00025 \\
+ Learning rate - critic & 0.00025 \\
+ Mini Batch size & 64 \\
+ Replay buffer size & \(10^6\) \\
+ Soft target update parameter(\(\tau\)) & 0.001\\ [1ex]
+ \hline
+ \caption{Table: Hyper-parameter values of learning algorithm.}
+\end{tabular}
+\end{center}
+Hyper parameters of Neural networks, Score VS Episodes
+\end{document}
