@@ -1,1 +1,1 @@
-# obstacle-avoidance-target-acquisition
+# obstacle-avoidance-and-target-acquisition
